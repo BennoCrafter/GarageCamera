@@ -1,13 +1,13 @@
 echo "Installing python requirements"
-pip install -r requirements.txt
+pip install -r assets/requirements.txt
 
-echo "Installing fswebcam module"
+echo "\nInstalling fswebcam module"
 sudo apt-get install fswebcam
 
-echo "Creating executable"
+echo "\nCreating executable"
 chmod +x run.sh
 
-echo "Running setup.py script"
+echo "\nRunning setup.py script"
 python setup/setup.py
 
 exit 0
