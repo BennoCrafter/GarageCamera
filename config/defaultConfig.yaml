@@ -1,0 +1,26 @@
+# general
+general:
+  maxImages: 5
+  imagePath: SavedImages
+  siteForwarding: True
+  rebootAfterUpdate: true
+  image_data:
+    scale:
+      width: 1000
+      height: 800
+    type: jpeg
+
+# Home Assistant configs (not required)
+homeAssistant:
+  useHomeAssistant: false
+  homeAssistantToken: home_assistant_token
+  host: host_name
+  scriptName: script_name
+
+# Discord configs (not required)
+discord:
+  useDiscordBot: true
+  discordBotToken: token
+  sourceChannelId: 1234567890
+  destinationChannelId: 1234567890
+  statusChannelId: 1234567890
