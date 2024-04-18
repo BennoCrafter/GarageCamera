@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 ip_address = get_ip_address()
 IMAGE_URL = "assets/startup.jpeg"
-configData = Config("config.json")
+configData = Config("config/config.yaml")
 
 
 @app.route('/')

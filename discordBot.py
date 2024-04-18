@@ -11,7 +11,7 @@ from config.config import Config
 configData = Config("config/config.yaml")
 
 useDiscordBot = configData.get_value("discord", "useDiscordBot")
-token = configData.get_value("discord", "token")
+token = configData.get_value("discord", "discordBotToken")
 
 source_channel_id = configData.get_value("discord", "sourceChannelId")
 destination_channel_id = configData.get_value("discord", "destinationChannelId")

@@ -4,7 +4,7 @@ from config.config import Config
 from utils.checkOs import is_raspberry_pi
 
 
-configData = Config("config.json")
+configData = Config("config/config.yaml")
 def update_project_from_git():
     project_path = os.path.dirname(os.path.realpath(__file__))
     try:
