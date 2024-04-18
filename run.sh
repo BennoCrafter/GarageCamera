@@ -15,11 +15,11 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Starting Discord Bot"
-python3 discord/discordBot.py &
+python3 discordBot.py &
 PID1=$!
 
 echo "Starting Server!"
-python3 server/server.py &
+python3 server.py &
 PID2=$!
 
 
