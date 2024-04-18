@@ -36,9 +36,9 @@ def capture_image_cv(image_path, image_name, image_type):
 
 def capture_image_pi(image_path, image_name, image_type, img_data):
     if image_type in valid_image_formats:
-        command = f"fswebcam {image_path}/{image_name} --scale {str(img_data['width'])}x{str(img_data['height'])} --{image_type}"
+        command = f"fswebcam {image_path}/{image_name} --scale {str(img_data['scale']['width'])}x{str(img_data['scale']['height'])} --{image_type}"
     else:
-        command = f"fswebcam {image_path}/{image_name} --scale {str(img_data['width'])}x{str(img_data['height'])} --jpeg"
+        command = f"fswebcam {image_path}/{image_name} --scale {str(img_data['scale']['width'])}x{str(img_data['scale']['height'])} --jpeg"
         print(f"Capture image: Error: Wrong image type. '{image_type}' is not a valid format. Using jpeg instead.")
 
     # Execute the command using os.system()

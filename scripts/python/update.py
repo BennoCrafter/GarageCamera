@@ -14,7 +14,6 @@ path = configData.get_value("general", "imagePath")
 image_name = datetime.now().strftime("%Y%m%d_%H%M%S")
 image_type = configData.data["general"]["image_data"]["type"]
 image_data = configData.data["general"]["image_data"]
-print(image_data)
 
 def update():
     file_names = list_files(path)
