@@ -16,7 +16,7 @@ def getOldestImage(images_list):
 
 def manageImageStorage(images_list):
     if isImageStorageFull(images_list):
-        file_path = f"{dataConfig.get_value("general", "imagePath")}/{getOldestImage(images_list)}"
+        file_path = f"{dataConfig.get_value('general', 'imagePath')}/{getOldestImage(images_list)}"
         if os.path.exists(file_path):
             os.remove(file_path)
             print(f"{file_path} has been deleted.")
