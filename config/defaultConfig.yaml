@@ -9,6 +9,7 @@ general:
       width: 1000
       height: 800
     type: jpeg
+    quality: 100
 
 # Home Assistant configs (not required)
 homeAssistant:
