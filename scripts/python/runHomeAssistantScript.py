@@ -9,7 +9,7 @@ headers = None
 # Set up your HomeAssistant URL and API key
 def setupHomeAssistant():
     global url, headers
-    url = f"{config_data.get_value('host')}/api/services/script/{config_data.get_value('scriptName')}"
+    url = f"{config_data.get_value('homeAssistant', 'host')}/api/services/script/{config_data.get_value('scriptName')}"
     headers = {
         "Authorization": f"Bearer {config_data.get_value('homeAssistant','homeAssistantToken')}",
         "Content-Type": "application/json",
