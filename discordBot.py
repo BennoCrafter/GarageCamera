@@ -146,8 +146,8 @@ async def refresh_image(ctx):
     author = ctx.author if isinstance(ctx, ComponentContext) else ctx.message.author
 
     destination_channel = bot.get_channel(destination_channel_id)
-    update()
-    image_path = 'SavedImages/current-image.jpeg'
+    
+    image_path = configData.get_value("general", "imagePath") + "/" + update()
 
     try:
         # check if image file exists
