@@ -11,7 +11,7 @@ def setupHomeAssistant():
     global url, headers
     url = f"{config_data.get_value('host')}/api/services/script/{config_data.get_value('scriptName')}"
     headers = {
-        "Authorization": f"Bearer {config_data.get_value("homeAssistant",'homeAssistantToken')}",
+        "Authorization": f"Bearer {config_data.get_value('homeAssistant','homeAssistantToken')}",
         "Content-Type": "application/json",
     }
 

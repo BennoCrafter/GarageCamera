@@ -8,7 +8,7 @@ class Config:
 
     def load_data(self):
         try:
-            with open('config.yaml', 'r') as file:
+            with open(self.file_path, 'r') as file:
                 data = yaml.safe_load(file)
             return data
         except FileNotFoundError:
