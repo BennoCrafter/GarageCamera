@@ -21,7 +21,7 @@ def update_project_from_git():
     try:
         subprocess.run(['git', 'pull'], check=True)
         print("Project successfully updated from the Git repository!")
-        if configData.get_value("rebootAfterUpdate"):
+        if configData.get_value("general", "rebootAfterUpdate"):
             print("Rebooting now!")
             if is_raspberry_pi():
                 subprocess.run(['reboot'], check=True)
