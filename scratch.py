@@ -1,12 +1,4 @@
-from datetime import datetime
-x = datetime.now().strftime("%Y%m%d_%H%M%S")
-print(x)
+exampleData = {"discord":{"token": "1234ff", "channel": 12345}, "general": {"image_data": {"scale": {"width": 100, "height": 200}, "type": "lol"}}, "homeassistant": {"token": "12"}}
 
-s = ["20240417_184119", "20240417_184105", "20230417_184341"]
-
-def x(lis): 
-    lis.sort()
-    return lis
-
-print(s)
-print(x(s))
+print(exampleData["general"]["image_data"]["type"])
+print(list(exampleData.keys()))

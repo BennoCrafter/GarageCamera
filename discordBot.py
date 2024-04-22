@@ -6,7 +6,7 @@ from interactions import (slash_command, SlashContext, listen, slash_option, Opt
 from scripts.python.update import update
 from os import path
 from config.config import Config
-
+from time import sleep
 
 configData = Config("config/config.yaml")
 
@@ -45,7 +45,7 @@ async def on_message_create(ctx):
 
 @slash_command(name="ping", description="Ping command.")
 async def ping(ctx: SlashContext):
-    await ctx.send("Pong!", ephemeral=True)
+    await ctx.send(f"Pong! ({bot.latency*1000}ms)")
 
 
 @slash_command(name="usage", description="Shows the usage of the bot.")
@@ -76,28 +76,27 @@ async def settings(ctx: SlashContext):
     await ctx.send("Settings command.", ephemeral=True)
 
 @slash_command(name="setup", description="Setup the discord bot.")
-async def settings(ctx: SlashContext):
+async def setup(ctx: SlashContext):
     await ctx.send("Settings command.", ephemeral=True)
 
 
-@settings.subcommand(
-    sub_cmd_name="edit",
-    sub_cmd_description="Edit the Settings",
-)
+@settings.subcommand(sub_cmd_name="edit", sub_cmd_description="Edit the Settings")
 async def edit_settings(ctx: SlashContext):
+    # Categorys
     components = StringSelectMenu(
-        ["Pizza", "Pasta", "Burger", "Salad"],
-        placeholder="Choose your favourite food?",
+        # todo load with config yaml data
+        ["General", "Discord", "Home Assistant"],
+        placeholder="Choose the category which you wanna edit",
         min_values=1,
         max_values=1,
-        custom_id="food_select",
+        custom_id="category_select",
     )
     await ctx.send("What is your favourite food?", components=components)
 
 
-@component_callback("food_select")
+@component_callback("category_select")
 async def my_callback(ctx: ComponentContext):
-    await ctx.send(f"Your favourite food is {ctx.values[0]}", ephemeral=True)
+    await ctx.edit(f"Your favourite food is {ctx.values[0]}", ephemeral=True)
 
 
 @slash_command(name="clear", description="Clear messages in the channel")
@@ -171,4 +170,13 @@ async def refresh_image(ctx):
         if isinstance(ctx, ComponentContext):
             return await ctx.send(f"An unexpected error occured. Try again.", ephemeral=True)
 
-bot.start()
+
+if __name__ == "__main__":
+    restart_time = 5
+    try:
+        bot.start()
+    except Exception as e:
+        print(f"Connection Error: {e}")
+        print(f"Restarting Discord bot in {restart_time}!")
+        sleep(restart_time)
+        
