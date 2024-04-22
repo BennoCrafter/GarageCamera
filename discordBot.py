@@ -171,12 +171,15 @@ async def refresh_image(ctx):
             return await ctx.send(f"An unexpected error occured. Try again.", ephemeral=True)
 
 
-if __name__ == "__main__":
-    restart_time = 5
+def start_bot(bot, restart_time=5):
     try:
         bot.start()
     except Exception as e:
         print(f"Connection Error: {e}")
         print(f"Restarting Discord bot in {restart_time}!")
         sleep(restart_time)
+        start_bot(bot=bot, restart_time=restart_time)
+
+if __name__ == "__main__":
+    start_bot(bot=bot, restart_time=5)
         

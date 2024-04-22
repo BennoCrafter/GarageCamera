@@ -19,7 +19,7 @@ def index():
 
 @app.route('/home')
 def home():
-    return "Home :)"
+    return "Home page :)"
 
 @app.route('/raw_image')
 def get_raw_image():
