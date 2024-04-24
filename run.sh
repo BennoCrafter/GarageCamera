@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ -z "$1" ]; then
+    # If no argument, use default
+    echo "No argument provided. Using default value."
+    python_version="python3"
+else
+    python_version="$1"
+fi
+
 # Function to handle cleanup
 cleanup() {
     echo "Stopping GarageCamera."
@@ -15,12 +23,12 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Starting Discord Bot"
-python3 discordBot.py &
+$arg1 discordBot.py &
 PID1=$!
 
 echo "Starting Server!"
-python3 server.py &
-PID2=$!
+$arg1 server.py &
+$PID2=$!
 
 
 file_path="assets/ascii_name.txt"

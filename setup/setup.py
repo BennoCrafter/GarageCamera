@@ -1,15 +1,13 @@
 import os
 import argparse
 
-smth_exists_already = False
 class Setup:
     def __init__(self):
-        self.smth_exists_already = False
-
+        pass
+    
     def check_and_create_file(self, target_file, template_file):
         # Check if the target file already exists
         if os.path.exists(target_file):
-            self.smth_exists_already = True
             print(f"{target_file} already exists.\n")
         else:
             # Read the content from the template file
@@ -45,7 +43,6 @@ class Setup:
             os.mkdir(image_dir_name)
             print("Created image directory!")
         else:
-            self.smth_exists_already = True
             print(f"{image_dir_name} already exists.")
 
 if __name__ == "__main__":

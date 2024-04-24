@@ -65,12 +65,6 @@ async def usage(ctx: SlashContext) -> None:
     await ctx.channel.send(embed=embed, components=refresh_button)
     await ctx.send("Setuped usage!", ephemeral=True)
 
-
-@component_callback("refresh_button")
-async def refresh_button(ctx: ComponentContext):
-    await refresh_image(ctx)
-
-
 @slash_command(name="settings", description="Manage the Settings")
 async def settings(ctx: SlashContext):
     await ctx.send("Settings command.", ephemeral=True)
@@ -169,6 +163,12 @@ async def refresh_image(ctx):
         await send_embed("error", str(e), ctx.author)
         if isinstance(ctx, ComponentContext):
             return await ctx.send(f"An unexpected error occured. Try again.", ephemeral=True)
+
+
+@component_callback("refresh_button")
+async def refresh_button(ctx: ComponentContext):
+    await ctx.defer(ephemeral=True)
+    await refresh_image(ctx)
 
 
 def start_bot(bot, restart_time=5):
