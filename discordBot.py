@@ -18,6 +18,7 @@ destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
 
 bot = None
+sleep(60)
 
 if useDiscordBot:
     bot = interactions.Client(token=token, intents=Intents.GUILDS | Intents.ALL)
