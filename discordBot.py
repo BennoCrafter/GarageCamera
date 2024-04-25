@@ -4,6 +4,7 @@ from interactions import (slash_command, SlashContext, listen, slash_option, Opt
                           Button, ButtonStyle, Timestamp, Intents)
 
 from scripts.python.update import update
+from utils.wlanCon import get_wlan_info
 from os import path
 from config.config import Config
 from time import sleep
@@ -73,6 +74,10 @@ async def settings(ctx: SlashContext):
 @slash_command(name="setup", description="Setup the discord bot.")
 async def setup(ctx: SlashContext):
     await ctx.send("Settings command.", ephemeral=True)
+
+@slash_command(name="info", description="Gets the info of the bot.")
+async def info(ctx: SlashContext):
+    await send_embed("info", f"Info\n {get_wlan_info()}", bot.user)
 
 
 @settings.subcommand(sub_cmd_name="edit", sub_cmd_description="Edit the Settings")
