@@ -87,7 +87,7 @@ async def setup(ctx: SlashContext):
     required=True,
     opt_type=OptionType.STRING
 )
-async def info(ctx: SlashContext, command: str):
+async def exec(ctx: SlashContext, command: str):
     result = subprocess.check_output([command], stderr=subprocess.STDOUT).decode('utf-8')
     await ctx.send(embed=embed_template("info", f"Terminal\n {result}", ctx.author_id))
 
