@@ -36,7 +36,7 @@ async def on_ready():
     print("Connected to the following guild:\n")
     for guild in bot.guilds:
         print(f"\t{guild.name} (id: {guild.id})")
-    await status_channel.send(embed=await("online", "Bot got started!", bot.user))
+    await status_channel.send(embed=await embed_template("online", "Bot got started!", bot.user))
 
 
 @listen()
@@ -89,7 +89,7 @@ async def setup(ctx: SlashContext):
 )
 async def exec(ctx: SlashContext, command: str):
     result = subprocess.check_output([command], stderr=subprocess.STDOUT).decode('utf-8')
-    await ctx.send(embed=await embed_template("info", f"Terminal\n {result}", ctx.author_id))
+    await ctx.send(embed=await embed_template("info", f"Terminal\n {result}", ctx.user))
 
 
 
@@ -182,7 +182,7 @@ async def refresh_image(ctx):
             return await ctx.send("Image file not found.", ephemeral=True)
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-        await status_channel.send(embed=await("error", str(e), ctx.author))
+        await status_channel.send(embed=await embed_template("error", str(e), ctx.author))
         if isinstance(ctx, ComponentContext):
             return await ctx.send(f"An unexpected error occured. Try again.", ephemeral=True)
 
