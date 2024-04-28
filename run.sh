@@ -3,7 +3,7 @@
 if [ -z "$1" ]; then
     # If no argument, use default
     echo "No argument provided. Using default value."
-    python_version="python3"
+    python_version="python"
 else
     python_version="$1"
 fi
@@ -23,11 +23,11 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Starting Discord Bot"
-$arg1 discordBot.py &
+$python_version discordBot.py &
 PID1=$!
 
 echo "Starting Server!"
-$arg1 server.py &
+$python_version server.py &
 $PID2=$!
 
 
