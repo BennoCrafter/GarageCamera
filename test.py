@@ -1,4 +1,3 @@
-s = False
+from utils.getWlanLevel import get_signal_level
 
-while not s:
-    print("s")
+print("Signal Strength: ", get_signal_level("wlan1"))
