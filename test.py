@@ -1,3 +1,4 @@
-x, s = None, None
-print(x)
-print(s)
+s = False
+
+while not s:
+    print("s")

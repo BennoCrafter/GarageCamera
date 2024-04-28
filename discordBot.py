@@ -7,6 +7,7 @@ from scripts.python.update import update
 from utils.wlanCon import get_wlan_info
 from os import path
 from config.config import Config
+from utils.getWlanLevel import get_signal_level
 from time import sleep
 import os
 
@@ -51,14 +52,10 @@ async def on_message_create(ctx):
             await ctx.message.delete()
             await refresh_image(ctx)
     elif int(ctx.message.channel.id) == terminal_channel_id:
-        await execute_terminal_command(ctx, ctx.mesage.content)
-
-
-async def execute_terminal_command(ctx, command):
-    await ctx.defer(ephemeral=True)
-    stream = os.popen(command)
-    output = stream.read()
-    await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
+        await ctx.defer(ephemeral=True)
+        stream = os.popen(ctx.message.content)
+        output = stream.read()
+        await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
 
 
 @slash_command(name="ping", description="Ping command.")
@@ -210,9 +207,21 @@ def start_bot(bot, restart_time=5):
     try:
         bot.start()
     except Exception as e:
+        # minium signal level required
+        # todo: add min_signal_level and restart time as config
+        reached_wlan_level = False
+        min_signal_level = 15
+
         print(f"Connection Error: {e}")
-        print(f"Restarting Discord bot in {restart_time}!")
-        sleep(restart_time)
+
+        while not reached_wlan_level:
+            if int(get_signal_level(wanted_wlan="wlan1")) >= min_signal_level:
+                reached_wlan_level = True
+            else:
+                print(f"Failed to connect to wlan. Trying in {restart_time} seconds again.")
+                sleep(restart_time)
+
+        print(f"Sucessfully connected to wlan again! Starting Discord Bot")
         start_bot(bot=bot, restart_time=restart_time)
 
 if __name__ == "__main__":
