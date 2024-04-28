@@ -8,7 +8,7 @@ from utils.wlanCon import get_wlan_info
 from os import path
 from config.config import Config
 from time import sleep
-import subprocess
+import os
 
 
 configData = Config("config/config.yaml")
@@ -88,7 +88,7 @@ async def setup(ctx: SlashContext):
     opt_type=OptionType.STRING
 )
 async def exec(ctx: SlashContext, command: str):
-    result = subprocess.check_output([command], stderr=subprocess.STDOUT).decode('utf-8')
+    result = os.system(command)
     await ctx.send(embed=await embed_template("info", f"Terminal\n {result}", ctx.user))
 
 
