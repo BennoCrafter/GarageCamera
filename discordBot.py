@@ -88,6 +88,7 @@ async def setup(ctx: SlashContext):
     opt_type=OptionType.STRING
 )
 async def exec(ctx: SlashContext, command: str):
+    await ctx.defer(ephemeral=True)
     result = os.system(command)
     await ctx.send(embed=await embed_template("info", f"Terminal\n {result}", ctx.user))
 
