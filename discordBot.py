@@ -36,7 +36,7 @@ async def on_ready():
     print("Connected to the following guild:\n")
     for guild in bot.guilds:
         print(f"\t{guild.name} (id: {guild.id})")
-    await status_channel.send(embed=embed_template("online", "Bot got started!", bot.user))
+    await status_channel.send(embed=await("online", "Bot got started!", bot.user))
 
 
 @listen()
@@ -89,13 +89,13 @@ async def setup(ctx: SlashContext):
 )
 async def exec(ctx: SlashContext, command: str):
     result = subprocess.check_output([command], stderr=subprocess.STDOUT).decode('utf-8')
-    await ctx.send(embed=embed_template("info", f"Terminal\n {result}", ctx.author_id))
+    await ctx.send(embed=await embed_template("info", f"Terminal\n {result}", ctx.author_id))
 
 
 
 @slash_command(name="info", description="Gets the info of the bot.")
 async def info(ctx: SlashContext):
-    await ctx.send(embed=embed_template("info", f"Info\n {get_wlan_info()}", bot.user))
+    await ctx.send(embed=await embed_template("info", f"Info\n {get_wlan_info()}", bot.user))
 
 
 @settings.subcommand(sub_cmd_name="edit", sub_cmd_description="Edit the Settings")
@@ -167,22 +167,22 @@ async def refresh_image(ctx):
     try:
         # check if image file exists
         if path.exists(image_path):
-            await status_channel.send(embed=embed_template("success", "Successfully sent the image.", author))
+            await destination_channel.send(file=File(image_path))
+            await status_channel.send(embed=await embed_template("success", "Successfully sent the image.", author))
             print('Image sent to the destination channel')
         else:
             raise FileNotFoundError
-            await destination_channel.send(file=File(image_path))
 
         if isinstance(ctx, ComponentContext):
             return await ctx.send(f"Image was sent into {destination_channel.mention}.", ephemeral=True)
     except FileNotFoundError:
         print('Image file not found')
-        await status_channel.send(embed=embed_template("error", "File not found", ctx.author))
+        await status_channel.send(embed=await embed_template("error", "File not found", ctx.author))
         if isinstance(ctx, ComponentContext):
             return await ctx.send("Image file not found.", ephemeral=True)
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-        await status_channel.send(embed=embed_template("error", str(e), ctx.author))
+        await status_channel.send(embed=await("error", str(e), ctx.author))
         if isinstance(ctx, ComponentContext):
             return await ctx.send(f"An unexpected error occured. Try again.", ephemeral=True)
 
