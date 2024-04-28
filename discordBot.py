@@ -20,7 +20,7 @@ source_channel_id = configData.get_value("discord", "sourceChannelId")
 destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
 terminal_channel_id = configData.get_value("discord", "terminalChannelId")
-status_channel, terminal_channel = None
+status_channel, terminal_channel = None, None
 bot = None
 sleep(60)
 
@@ -51,7 +51,7 @@ async def on_message_create(ctx):
             await ctx.message.delete()
             await refresh_image(ctx)
     elif int(ctx.message.channel.id) == terminal_channel_id:
-        await execute_terminal_command(ctx.mesage.content)
+        await execute_terminal_command(ctx, ctx.mesage.content)
 
 
 async def execute_terminal_command(ctx, command):
