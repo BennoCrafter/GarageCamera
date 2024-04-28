@@ -25,3 +25,4 @@ discord:
   sourceChannelId: 1234567890
   destinationChannelId: 1234567890
   statusChannelId: 1234567890
+  terminalChannelId: 1234567890

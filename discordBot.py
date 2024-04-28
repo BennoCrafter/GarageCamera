@@ -19,7 +19,8 @@ token = configData.get_value("discord", "discordBotToken")
 source_channel_id = configData.get_value("discord", "sourceChannelId")
 destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
-status_channel = None
+terminal_channel_id = configData.get_value("discord", "terminalChannelId")
+status_channel, terminal_channel = None
 bot = None
 sleep(60)
 
@@ -31,7 +32,11 @@ else:
 @listen()
 async def on_ready():
     global status_channel
+    global terminal_channel
     status_channel = bot.get_channel(status_channel_id)
+    terminal_channel = bot.get_channel(terminal_channel_id)
+
+
     print(f"Discord Bot: Logged in as {bot.user}")
     print("Connected to the following guild:\n")
     for guild in bot.guilds:
@@ -41,12 +46,19 @@ async def on_ready():
 
 @listen()
 async def on_message_create(ctx):
-    if int(ctx.message.channel.id) != source_channel_id:
-        return
+    if int(ctx.message.channel.id) == source_channel_id:  
+        if ctx.message.content == "refresh":
+            await ctx.message.delete()
+            await refresh_image(ctx)
+    elif int(ctx.message.channel.id) == terminal_channel_id:
+        await execute_terminal_command(ctx.mesage.content)
 
-    if ctx.message.content == "refresh":
-        await ctx.message.delete()
-        await refresh_image(ctx)
+
+async def execute_terminal_command(ctx, command):
+    await ctx.defer(ephemeral=True)
+    stream = os.popen(command)
+    output = stream.read()
+    await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
 
 
 @slash_command(name="ping", description="Ping command.")
@@ -92,7 +104,6 @@ async def exec(ctx: SlashContext, command: str):
     stream = os.popen(command)
     output = stream.read()
     await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
-
 
 
 @slash_command(name="info", description="Gets the info of the bot.")
