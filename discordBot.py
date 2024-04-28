@@ -89,8 +89,9 @@ async def setup(ctx: SlashContext):
 )
 async def exec(ctx: SlashContext, command: str):
     await ctx.defer(ephemeral=True)
-    result = os.system(command)
-    await ctx.send(embed=await embed_template("info", f"Terminal\n {result}", ctx.user))
+    stream = os.popen('pwd ; cd; pwd')
+    output = stream.read()
+    await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
 
 
 

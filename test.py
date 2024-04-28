@@ -1,3 +1,5 @@
 import os
 
-print(os.system("pwd; cd; pwd"))
+stream = os.popen('pwd ; cd; pwd')
+output = stream.read()
+print(output)
