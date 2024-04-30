@@ -60,7 +60,7 @@ async def on_message_create(ctx):
 
 @slash_command(name="ping", description="Ping command.")
 async def ping(ctx: SlashContext):
-    await ctx.send(f"Pong! ({bot.latency*1000}ms)")
+    await ctx.send(f"Pong! ({bot.latency*1000}ms) Current Signal Strength: {get_signal_level(wanted_wlan='wlan1')}")
 
 
 @slash_command(name="usage", description="Shows the usage of the bot.")
