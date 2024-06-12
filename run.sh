@@ -13,7 +13,7 @@ cleanup() {
     echo "Stopping GarageCamera."
 
     # Kill the background processes
-    kill $PID1 $PID2
+    kill $PID1 $PID2 $PID3
 
     echo "Stopped GarageCamera."
     exit 1
@@ -30,6 +30,9 @@ echo "Starting Server!"
 $python_version server.py &
 $PID2=$!
 
+echo "Starting Auto restart!"
+$python_version scripts/python/auto_restart.py
+$PID3=$!
 
 file_path="assets/ascii_name.txt"
 
@@ -39,5 +42,6 @@ cat "$file_path"
 # Wait for both background processes to finish
 wait $PID1
 wait $PID2
+wait $PID3
 
 echo "Started GarageCamera!"
