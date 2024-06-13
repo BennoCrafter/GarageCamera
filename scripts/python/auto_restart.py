@@ -3,6 +3,9 @@
 import os
 import time
 from datetime import datetime
+from time import sleep 
+
+sleep(60)
 
 def reboot():
     os.system('sudo reboot')
