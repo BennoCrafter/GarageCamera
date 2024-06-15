@@ -61,7 +61,7 @@ async def on_message_create(ctx):
         await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
     elif channel_id == watcher_channel_id:
         # send response to watcher
-        if ctx.message.author != bot.author
+        if ctx.message.author != bot.author:
             await watcher_channel.send("pong:" + ctx.message.content)
 
 @slash_command(name="ping", description="Ping command.")
