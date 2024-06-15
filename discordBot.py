@@ -35,7 +35,7 @@ else:
 async def on_ready():
     global status_channel
     global terminal_channel
-    global watcher_channel_id
+    global watcher_channel
     status_channel = bot.get_channel(status_channel_id)
     terminal_channel = bot.get_channel(terminal_channel_id)
     watcher_channel = bot.get_channel(watcher_channel_id)
