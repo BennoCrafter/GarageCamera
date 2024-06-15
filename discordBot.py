@@ -21,7 +21,7 @@ source_channel_id = configData.get_value("discord", "sourceChannelId")
 destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
 terminal_channel_id = configData.get_value("discord", "terminalChannelId")
-watcher_channel_id = configData.get_value("discord", "watcherChannelId")
+watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
 status_channel, terminal_channel, watcher_channel = None, None, None
 bot = None
 sleep(60)
@@ -38,7 +38,7 @@ async def on_ready():
     global watcher_channel_id
     status_channel = bot.get_channel(status_channel_id)
     terminal_channel = bot.get_channel(terminal_channel_id)
-    watcher_channel_id = bot.get_channel(watcher_channel_id)
+    watcher_channel = bot.get_channel(watcher_channel_id)
 
     print(f"Discord Bot: Logged in as {bot.user}")
     print("Connected to the following guild:\n")
@@ -61,7 +61,7 @@ async def on_message_create(ctx):
         await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
     elif channel_id == watcher_channel_id:
         # send response to watcher
-        await ctx.send("pong:" + ctx.message.content)
+        await watcher_channel.send("pong:" + ctx.message.content)
 
 @slash_command(name="ping", description="Ping command.")
 async def ping(ctx: SlashContext):
