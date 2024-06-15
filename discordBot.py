@@ -21,7 +21,8 @@ source_channel_id = configData.get_value("discord", "sourceChannelId")
 destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
 terminal_channel_id = configData.get_value("discord", "terminalChannelId")
-status_channel, terminal_channel = None, None
+watcher_channel_id = configData.get_value("discord", "watcherChannelId")
+status_channel, terminal_channel, watcher_channel = None, None, None
 bot = None
 sleep(60)
 
@@ -34,9 +35,10 @@ else:
 async def on_ready():
     global status_channel
     global terminal_channel
+    global watcher_channel_id
     status_channel = bot.get_channel(status_channel_id)
     terminal_channel = bot.get_channel(terminal_channel_id)
-
+    watcher_channel_id = bot.get_channel(watcher_channel_id)
 
     print(f"Discord Bot: Logged in as {bot.user}")
     print("Connected to the following guild:\n")
@@ -47,16 +49,19 @@ async def on_ready():
 
 @listen()
 async def on_message_create(ctx):
-    if int(ctx.message.channel.id) == source_channel_id:  
+    channel_id = int(ctx.message.channel.id)
+    if channel_id == source_channel_id:
         if ctx.message.content == "refresh":
             await ctx.message.delete()
             await refresh_image(ctx)
-    elif int(ctx.message.channel.id) == terminal_channel_id:
+    elif channel_id == terminal_channel_id:
         await ctx.defer(ephemeral=True)
         stream = os.popen(ctx.message.content)
         output = stream.read()
         await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
-
+    elif channel_id == watcher_channel_id:
+        # send response to watcher
+        await ctx.send("pong:" + ctx.message.content)
 
 @slash_command(name="ping", description="Ping command.")
 async def ping(ctx: SlashContext):
@@ -171,7 +176,7 @@ async def refresh_image(ctx):
     author = ctx.author if isinstance(ctx, ComponentContext) else ctx.message.author
 
     destination_channel = bot.get_channel(destination_channel_id)
-    
+
     image_path = configData.get_value("general", "imagePath") + "/" + update()
 
     try:
@@ -226,4 +231,3 @@ def start_bot(bot, restart_time=5):
 
 if __name__ == "__main__":
     start_bot(bot=bot, restart_time=5)
-        
