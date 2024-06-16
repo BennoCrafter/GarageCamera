@@ -35,7 +35,7 @@ else:
 async def on_ready():
     global status_channel
     global terminal_channel
-    global watcher_channel_id
+    global watcher_channel
     status_channel = bot.get_channel(status_channel_id)
     terminal_channel = bot.get_channel(terminal_channel_id)
     watcher_channel = bot.get_channel(watcher_channel_id)
@@ -61,7 +61,8 @@ async def on_message_create(ctx):
         await ctx.send(embed=await embed_template("info", f"Terminal\n {output}", ctx.user))
     elif channel_id == watcher_channel_id:
         # send response to watcher
-        await watcher_channel.send("pong:" + ctx.message.content)
+        if ctx.message.author != bot.user:
+            await watcher_channel.send("pong:" + ctx.message.content)
 
 @slash_command(name="ping", description="Ping command.")
 async def ping(ctx: SlashContext):
