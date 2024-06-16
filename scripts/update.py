@@ -1,11 +1,12 @@
 from datetime import datetime
-
 from config.config import Config
-from utils.manageImageStorage import manageImageStorage, sortImages
+
 from utils.list_files import list_files
-from scripts.python.createNewImage import capture_image
-from scripts.python.loadNewImage import loadNewImage
-from scripts.python.runHomeAssistantScript import sendImageToHomeAssistant
+from scripts.runHomeAssistantScript import sendImageToHomeAssistant
+
+from scripts.imageManagement.manageImageStorage import manageImageStorage, sortImages
+from scripts.imageManagement.createNewImage import capture_image
+from scripts.imageManagement.loadNewImage import loadNewImage
 
 configData = Config("config/config.yaml")
 
@@ -20,8 +21,7 @@ def update():
     file_names = list_files(path)
     print(manageImageStorage(file_names))
     loadNewImage(sortImages(file_names)[-1])
-    if configData.get_value("homeAssistant", "useHomeAssistant"): 
+    if configData.get_value("homeAssistant", "useHomeAssistant"):
         sendImageToHomeAssistant()
-    
-    return sortImages(list_files(path))[-1]
 
+    return sortImages(list_files(path))[-1]

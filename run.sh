@@ -23,7 +23,7 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Starting Discord Bot"
-$python_version discordBot.py &
+sh run_discordBot.sh $python_version &
 PID1=$!
 
 echo "Starting Server!"
@@ -32,6 +32,10 @@ $PID2=$!
 
 echo "Starting Auto restart!"
 $python_version scripts/python/auto_restart.py
+$PID3=$!
+
+echo "Starting Auto change detector!"
+$python_version changeDetector/changeDetector.py
 $PID3=$!
 
 file_path="assets/ascii_name.txt"

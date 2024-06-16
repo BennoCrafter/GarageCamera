@@ -1,9 +1,9 @@
 from flask import Flask, send_file, request, redirect, render_template
 import os
 from utils.getIp import get_ip_address
-from scripts.python.update import update
+from scripts.update import update
 from config.config import Config
-from utils.autoUpdateProject import update_project_from_git
+from scripts.autoUpdateProject import update_project_from_git
 from waitress import serve
 
 app = Flask(__name__)
@@ -44,7 +44,7 @@ def refresh_image():
         return redirect("/home")
     else:
         return "Refresh triggerd sucessfully."
-    
+
 @app.route('/update_project')
 def update_project():
     lel = update_project_from_git()

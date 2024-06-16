@@ -3,7 +3,7 @@ from interactions import (slash_command, SlashContext, listen, slash_option, Opt
                           StringSelectMenu, component_callback, ComponentContext, Embed, File,
                           Button, ButtonStyle, Timestamp, Intents)
 
-from scripts.python.update import update
+from scripts.update import update
 from utils.wlanCon import get_wlan_info
 from os import path
 from config.config import Config
@@ -24,8 +24,8 @@ terminal_channel_id = configData.get_value("discord", "terminalChannelId")
 watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
 status_channel, terminal_channel, watcher_channel = None, None, None
 bot = None
-sleep(60)
-
+# sleep(60)
+sleep(1)
 if useDiscordBot:
     bot = interactions.Client(token=token, intents=Intents.GUILDS | Intents.ALL)
 else:
@@ -171,6 +171,10 @@ async def embed_template(status, info_message, user_sent):
     embed.timestamp = Timestamp.now()
     return embed
 
+async def send_image(image_path, author):
+    await destination_channel.send(file=File(image_path))
+    await status_channel.send(embed=await embed_template("success", "Successfully sent the image.", author))
+    return 'Image sent to the destination channel'
 
 async def refresh_image(ctx):
     author = ctx.author if isinstance(ctx, ComponentContext) else ctx.message.author
@@ -182,9 +186,7 @@ async def refresh_image(ctx):
     try:
         # check if image file exists
         if path.exists(image_path):
-            await destination_channel.send(file=File(image_path))
-            await status_channel.send(embed=await embed_template("success", "Successfully sent the image.", author))
-            print('Image sent to the destination channel')
+            print(send_image(image_path, author))
         else:
             raise FileNotFoundError
 
@@ -212,22 +214,25 @@ def start_bot(bot, restart_time=5):
     try:
         bot.start()
     except Exception as e:
+        exit(1)
+        # moved into run_discordBot.sh
+
         # minium signal level required
         # todo: add min_signal_level and restart time as config
-        reached_wlan_level = False
-        min_signal_level = 15
+        # reached_wlan_level = False
+        # min_signal_level = 15
 
-        print(f"Connection Error: {e}")
+        # print(f"Connection Error: {e}")
 
-        while not reached_wlan_level:
-            if int(get_signal_level(wanted_wlan="wlan1")) >= min_signal_level:
-                reached_wlan_level = True
-            else:
-                print(f"Failed to connect to wlan. Trying in {restart_time} seconds again.")
-                sleep(restart_time)
+        # while not reached_wlan_level:
+        #     if int(get_signal_level(wanted_wlan="wlan1")) >= min_signal_level:
+        #         reached_wlan_level = True
+        #     else:
+        #         print(f"Failed to connect to wlan. Trying in {restart_time} seconds again.")
+        #         sleep(restart_time)
 
-        print(f"Sucessfully connected to wlan again! Starting Discord Bot")
-        start_bot(bot=bot, restart_time=restart_time)
+        # print(f"Sucessfully connected to wlan again! Starting Discord Bot")
+        # start_bot(bot=bot, restart_time=restart_time)
 
 if __name__ == "__main__":
     start_bot(bot=bot, restart_time=5)

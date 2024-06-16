@@ -1,5 +1,5 @@
 import subprocess
-import os 
+import os
 from config.config import Config
 from utils.checkOs import is_raspberry_pi
 
@@ -19,14 +19,14 @@ def update_project_from_git():
 
     # Pull changes from the Git repository
     try:
-        subprocess.run(['git', 'pull'], check=True)
+        os.system("sudo git pull")
         print("Project successfully updated from the Git repository!")
         if configData.get_value("general", "rebootAfterUpdate"):
             print("Rebooting now!")
             if is_raspberry_pi():
-                subprocess.run(['reboot'], check=True)
+                os.system("sudo reboot")
             else:
-                print("Failed rebooting!") 
+                print("Failed rebooting!")
 
     except subprocess.CalledProcessError as e:
         print(f"Failed to update project from Git repository: {e}")

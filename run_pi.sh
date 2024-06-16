@@ -15,7 +15,7 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Starting Discord Bot"
-python3.11 discordBot.py &
+sh run_discordBot.sh python3.11&
 PID1=$!
 
 echo "Starting Server!"
