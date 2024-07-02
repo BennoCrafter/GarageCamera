@@ -15,15 +15,15 @@ cleanup() {
 trap cleanup SIGINT
 
 echo "Starting Discord Bot"
-sh run_discordBot.sh python3.11&
+sh run_discordBot.sh my-venv/bin/python3.11&
 PID1=$!
 
 echo "Starting Server!"
-python3.11 server.py &
+my-venv/bin/python3.11 server.py &
 $PID2=$!
 
 echo "Starting Auto restart!"
-python3.11 scripts/python/auto_restart.py
+my-venv/bin/python3.11 scripts/python/auto_restart.py
 $PID3=$!
 
 file_path="assets/ascii_name.txt"
