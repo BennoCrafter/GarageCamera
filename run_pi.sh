@@ -23,7 +23,7 @@ my-venv/bin/python3.11 server.py &
 $PID2=$!
 
 echo "Starting Auto restart!"
-my-venv/bin/python3.11 scripts/python/auto_restart.py
+my-venv/bin/python3.11 scripts/auto_restart.py
 $PID3=$!
 
 file_path="assets/ascii_name.txt"

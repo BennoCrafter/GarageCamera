@@ -32,7 +32,7 @@ $python_version server.py &
 $PID2=$!
 
 echo "Starting Auto restart!"
-$python_version scripts/python/auto_restart.py
+$python_version scripts/auto_restart.py
 $PID3=$!
 
 echo "Starting Auto change detector!"
