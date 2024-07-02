@@ -214,26 +214,23 @@ async def refresh_button(ctx: ComponentContext):
 def start_bot(bot, restart_time=5):
     try:
         bot.start()
-    except Exception as e:
-        exit(1)
-        # moved into run_discordBot.sh
-
+    except:
         # minium signal level required
         # todo: add min_signal_level and restart time as config
-        # reached_wlan_level = False
-        # min_signal_level = 15
+        reached_wlan_level = False
+        min_signal_level = 15
 
-        # print(f"Connection Error: {e}")
+        print(f"Connection Error: {e}")
 
-        # while not reached_wlan_level:
-        #     if int(get_signal_level(wanted_wlan="wlan1")) >= min_signal_level:
-        #         reached_wlan_level = True
-        #     else:
-        #         print(f"Failed to connect to wlan. Trying in {restart_time} seconds again.")
-        #         sleep(restart_time)
+        while not reached_wlan_level:
+            if int(get_signal_level(wanted_wlan="wlan1")) >= min_signal_level:
+                reached_wlan_level = True
+            else:
+                print(f"Failed to connect to wlan. Trying in {restart_time} seconds again.")
+                sleep(restart_time)
 
-        # print(f"Sucessfully connected to wlan again! Starting Discord Bot")
-        # start_bot(bot=bot, restart_time=restart_time)
+        print(f"Sucessfully connected to wlan again! Starting Discord Bot")
+        start_bot(bot=bot, restart_time=restart_time)
 
 if __name__ == "__main__":
     start_bot(bot=bot, restart_time=5)

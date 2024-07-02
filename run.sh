@@ -5,6 +5,7 @@ if [ -z "$1" ]; then
     echo "No argument provided. Using default value."
     python_version="python"
 else
+    echo "Using: $1"
     python_version="$1"
 fi
 
