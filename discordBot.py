@@ -175,6 +175,7 @@ async def embed_template(status, info_message, user_sent):
     return embed
 
 async def send_image(image_path, author):
+    destination_channel = bot.get_channel(destination_channel_id)
     await destination_channel.send(file=File(image_path))
     await status_channel.send(embed=await embed_template("success", "Successfully sent the image.", author))
     return 'Image sent to the destination channel'
