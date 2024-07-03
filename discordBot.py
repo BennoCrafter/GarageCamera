@@ -22,7 +22,7 @@ destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
 terminal_channel_id = configData.get_value("discord", "terminalChannelId")
 watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
-status_channel, terminal_channel, watcher_channel = None, None, None
+status_channel, terminal_channel, watcher_channel, destination_channel = None, None, None, None
 bot = None
 # sleep(60)
 sleep(1)
@@ -36,9 +36,11 @@ async def on_ready():
     global status_channel
     global terminal_channel
     global watcher_channel
+    global destination_channel
     status_channel = bot.get_channel(status_channel_id)
     terminal_channel = bot.get_channel(terminal_channel_id)
     watcher_channel = bot.get_channel(watcher_channel_id)
+    destination_channel = bot.get_channel(destination_channel_id)
 
     print(f"Discord Bot: Logged in as {bot.user}")
     print("Connected to the following guild:\n")
