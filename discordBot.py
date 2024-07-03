@@ -187,7 +187,7 @@ async def refresh_image(ctx):
     try:
         # check if image file exists
         if path.exists(image_path):
-            print(send_image(image_path, author))
+            print(await send_image(image_path, author))
         else:
             raise FileNotFoundError
 
