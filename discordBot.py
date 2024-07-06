@@ -11,6 +11,7 @@ from utils.getWlanLevel import get_signal_level
 from time import sleep
 import os
 
+from scripts.imageManagement.manageImageStorage import manageImageStorage, sortImages
 
 configData = Config("config/config.yaml")
 
@@ -56,6 +57,8 @@ async def on_message_create(ctx):
         if ctx.message.content == "refresh":
             await ctx.message.delete()
             await refresh_image(ctx)
+        if ctx.message.content == "latest":
+            await send_image(sortImages(list_files(configData.get_value("general", "imagePath")))[-1])
     elif channel_id == terminal_channel_id:
         await ctx.defer(ephemeral=True)
         stream = os.popen(ctx.message.content)
