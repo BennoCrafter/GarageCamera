@@ -40,7 +40,7 @@ def minutes(sec):
 
 async def run():
     while True:
-        await asyncio.sleep(10)  # Use asyncio.sleep instead of time.sleep
+        await asyncio.sleep(60)
 
         new_image_name = datetime.now().strftime("%Y%m%d_%H%M%S")
         prev_image_path = sortImages(list_files(path))[-1]
@@ -51,6 +51,7 @@ async def run():
         similarity = app.similarity(f"{path}/{prev_image_path}", f"{path}/{new_image_path}")
         changed = app.changed(f"{path}/{prev_image_path}", f"{path}/{new_image_path}")
         if changed:
+            print("CHANGED!")
             await send_message_to_discord_channel("latest", webhook)
 
 asyncio.run(run())
