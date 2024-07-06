@@ -27,7 +27,7 @@ my-venv/bin/python3.11 scripts/auto_restart.py &
 $PID3=$!
 
 echo "Starting Auto detector."
-my-venv/bin/python3.11 changeDetector/changeDetector.py &
+my-venv/bin/python3.11 changeDetector.py &
 $PID4=$!
 
 file_path="assets/ascii_name.txt"
