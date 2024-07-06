@@ -5,7 +5,7 @@ from scripts.imageManagement.createNewImage import capture_image
 from scripts.imageManagement.manageImageStorage import sortImages
 from utils.list_files import list_files
 from discordBot import send_image
-from changeDetector.ImageComparator import ImageComparator
+from changeDetector_p.ImageComparator import ImageComparator
 
 
 configData = Config("config/config.yaml")

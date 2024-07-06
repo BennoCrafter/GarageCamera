@@ -1,7 +1,7 @@
 import os
 from PIL import Image, ImageFont, ImageDraw
 
-from changeDetector.ImageComparator import ImageComparator
+from changeDetector_p.ImageComparator import ImageComparator
 
 
 class ImageBatchComparator:
