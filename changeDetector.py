@@ -19,7 +19,7 @@ def minutes(sec):
 
 async def run():
     while True:
-        await asyncio.sleep(minutes(2))  # Use asyncio.sleep instead of time.sleep
+        await asyncio.sleep(minutes(1))  # Use asyncio.sleep instead of time.sleep
 
         new_image_name = datetime.now().strftime("%Y%m%d_%H%M%S")
         prev_image_path = sortImages(list_files(path))[-1]
@@ -27,9 +27,9 @@ async def run():
         new_image_path = sortImages(list_files(path))[-1]
 
         app = ImageComparator()
-        similarity = app.similarity(prev_image_path, new_image_path)
-        changed = app.changed(prev_image_path, new_image_path)
+        similarity = app.similarity(f"{path}/{prev_image_path}", f"{path}/{new_image_path}")
+        changed = app.changed(f"{path}/{prev_image_path}", f"{path}/{new_image_path}")
         if changed:
-            await send_image(new_image_path, "AutoDetector")  # Assuming send_image is an asynchronous function
+            await send_image(f"{path}/{new_image_path}", "AutoDetector")  # Assuming send_image is an asynchronous function
 
 asyncio.run(run())
