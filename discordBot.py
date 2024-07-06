@@ -58,7 +58,7 @@ async def on_message_create(ctx):
             await ctx.message.delete()
             await refresh_image(ctx)
         if ctx.message.content == "latest":
-            await send_image(sortImages(list_files(configData.get_value("general", "imagePath")))[-1])
+            await send_image(sortImages(list_files(configData.get_value("general", "imagePath")))[-1], "AutoDetector")
     elif channel_id == terminal_channel_id:
         await ctx.defer(ephemeral=True)
         stream = os.popen(ctx.message.content)
@@ -174,7 +174,7 @@ async def embed_template(status, info_message, user_sent):
             value=destination_channel.mention
         )
 
-    embed.add_field(name="Sent From User:", value=user_sent.mention)
+    embed.add_field(name="Sent From User:", value=user_sent)
     embed.timestamp = Timestamp.now()
     return embed
 
