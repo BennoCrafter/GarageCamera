@@ -149,6 +149,8 @@ async def clear(ctx: SlashContext, amount: int):
 
 
 async def embed_template(status, info_message, user_sent):
+    global destination_channel
+
     colors = {
         'error': 0xFF0000,
         'success': 0x57F287,
@@ -164,7 +166,6 @@ async def embed_template(status, info_message, user_sent):
     )
 
     if status == "success":
-        destination_channel = bot.get_channel(destination_channel_id)
         embed.add_field(
             name="Destination Channel",
             value=destination_channel.mention
@@ -175,6 +176,7 @@ async def embed_template(status, info_message, user_sent):
     return embed
 
 async def send_image(image_path, author):
+    global destination_channel
     await destination_channel.send(file=File(image_path))
     await status_channel.send(embed=await embed_template("success", "Successfully sent the image.", author))
     return 'Image sent to the destination channel'
