@@ -22,7 +22,7 @@ destination_channel_id = configData.get_value("discord", "destinationChannelId")
 status_channel_id = configData.get_value("discord", "statusChannelId")
 terminal_channel_id = configData.get_value("discord", "terminalChannelId")
 watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
-status_channel, terminal_channel, watcher_channel, destination_channel = None, None, None, None
+status_channel, terminal_channel, watcher_channel, destination_channel = None, None, None, "ss"
 bot = None
 # sleep(60)
 sleep(1)
@@ -41,7 +41,7 @@ async def on_ready():
     terminal_channel = bot.get_channel(terminal_channel_id)
     watcher_channel = bot.get_channel(watcher_channel_id)
     destination_channel = bot.get_channel(destination_channel_id)
-
+    print(destination_channel)
     print(f"Discord Bot: Logged in as {bot.user}")
     print("Connected to the following guild:\n")
     for guild in bot.guilds:
@@ -175,7 +175,6 @@ async def embed_template(status, info_message, user_sent):
     return embed
 
 async def send_image(image_path, author):
-    destination_channel = bot.get_channel(destination_channel_id)
     await destination_channel.send(file=File(image_path))
     await status_channel.send(embed=await embed_template("success", "Successfully sent the image.", author))
     return 'Image sent to the destination channel'
