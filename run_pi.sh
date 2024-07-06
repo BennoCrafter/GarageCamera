@@ -5,7 +5,7 @@ cleanup() {
     echo "Stopping GarageCamera."
 
     # Kill the background processes
-    kill $PID1 $PID2 $PID3
+    kill $PID1 $PID2 $PID3 $PID4
 
     echo "Scripts stopped."
     exit 1
