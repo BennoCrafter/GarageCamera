@@ -31,7 +31,7 @@ if useDiscordBot:
     bot = interactions.Client(token=token, intents=Intents.GUILDS | Intents.ALL)
 else:
     print("Disabled Discord Bot")
-
+exit(1)
 @listen()
 async def on_ready():
     global status_channel

@@ -40,7 +40,7 @@ def minutes(sec):
 
 async def run():
     while True:
-        await asyncio.sleep(minutes(1))  # Use asyncio.sleep instead of time.sleep
+        await asyncio.sleep(10)  # Use asyncio.sleep instead of time.sleep
 
         new_image_name = datetime.now().strftime("%Y%m%d_%H%M%S")
         prev_image_path = sortImages(list_files(path))[-1]
