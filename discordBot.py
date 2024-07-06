@@ -11,7 +11,7 @@ from utils.getWlanLevel import get_signal_level
 from time import sleep
 import os
 
-from scripts.imageManagement.manageImageStorage import manageImageStorage, sortImages
+from scripts.imageManagement.manageImageStorage import manageImageStorage, sortImages, list_files
 
 configData = Config("config/config.yaml")
 
