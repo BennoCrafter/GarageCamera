@@ -57,7 +57,8 @@ async def on_message_create(ctx):
             await ctx.message.delete()
             await refresh_image(ctx)
         if ctx.message.content == "latest":
-            await send_image(sortImages(list_files(configData.get_value("general", "imagePath")))[-1], "AutoDetector")
+            latest_image_name = sortImages(list_files(configData.get_value("general", "imagePath")))[-1],
+            await send_image(f"{configData.get_value("general", "imagePath")}/{latest_image_name}","AutoDetector")
     elif channel_id == terminal_channel_id:
         await ctx.defer(ephemeral=True)
         stream = os.popen(ctx.message.content)
