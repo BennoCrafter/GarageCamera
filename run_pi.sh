@@ -26,6 +26,10 @@ echo "Starting Auto restart!"
 my-venv/bin/python3.11 scripts/auto_restart.py
 $PID3=$!
 
+echo "Starting Auto detector."
+my-venv/bin/python3.11 changeDetector/changeDetector.py
+$PID4=$!
+
 file_path="assets/ascii_name.txt"
 
 # Print out logo
@@ -35,3 +39,4 @@ cat "$file_path"
 wait $PID1
 wait $PID2
 wait $PID3
+wait $PID4
