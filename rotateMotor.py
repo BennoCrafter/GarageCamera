@@ -60,5 +60,10 @@ def LEFT_TURN(deg):
 if __name__ == '__main__':
     RIGHT_TURN(90)
     time.sleep(1)
-    LEFT_TURN(90)
+    RIGHT_TURN(90)
+    time.sleep(1)
+    RIGHT_TURN(90)
+    time.sleep(1)
+    RIGHT_TURN(90)
+    time.sleep(5)
     GPIO_SETUP(0, 0, 0, 0)
