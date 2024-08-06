@@ -7,9 +7,9 @@ GPIO.setwarnings(False)
 
 # Set the GPIO Pin
 A = 17
-B = 18
-C = 27
-D = 7
+B = 27
+C = 22
+D = 4
 
 # Set the GPIO Pin mode
 GPIO.setup(A, GPIO.OUT)
