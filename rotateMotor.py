@@ -24,7 +24,7 @@ def GPIO_SETUP(a, b, c, d):
     GPIO.output(B, b)
     GPIO.output(C, c)
     GPIO.output(D, d)
-    time.sleep(0.01)
+    time.sleep(0.001)
 
 def RIGHT_TURN(deg):
     full_circle = 510.0
