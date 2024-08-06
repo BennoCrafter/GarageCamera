@@ -31,7 +31,7 @@ def RIGHT_TURN(deg):
     degree = full_circle / 360 * deg
     GPIO_SETUP(0, 0, 0, 0)
 
-    for i in range(int(degree)):
+    while degree > 0:
         GPIO_SETUP(1, 0, 0, 0)
         GPIO_SETUP(1, 1, 0, 0)
         GPIO_SETUP(0, 1, 0, 0)
@@ -40,6 +40,7 @@ def RIGHT_TURN(deg):
         GPIO_SETUP(0, 0, 1, 1)
         GPIO_SETUP(0, 0, 0, 1)
         GPIO_SETUP(1, 0, 0, 1)
+        degree -= 1
 
 def LEFT_TURN(deg):
     full_circle = 420.0
