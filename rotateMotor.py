@@ -6,10 +6,10 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 # Set the GPIO Pin
-A = 17
-B = 18
-C = 27
-D = 22
+A = 15
+B = 13
+C = 11
+D = 7
 
 # Set the GPIO Pin mode
 GPIO.setup(A, GPIO.OUT)
