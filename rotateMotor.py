@@ -1,23 +1,25 @@
 import time
 import RPi.GPIO as GPIO
 
-# Set the GPIO mode
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
+timeout = 0.001
 # Set the GPIO Pin
 A = 17
 B = 27
 C = 22
 D = 4
 
-# Set the GPIO Pin mode
-GPIO.setup(A, GPIO.OUT)
-GPIO.setup(B, GPIO.OUT)
-GPIO.setup(C, GPIO.OUT)
-GPIO.setup(D, GPIO.OUT)
+def setup_like_fc_i_have_holidays():
 
-timeout = 0.001
+    # Set the GPIO mode
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
+    # Set the GPIO Pin mode
+    GPIO.setup(A, GPIO.OUT)
+    GPIO.setup(B, GPIO.OUT)
+    GPIO.setup(C, GPIO.OUT)
+    GPIO.setup(D, GPIO.OUT)
+
 
 def GPIO_SETUP(a, b, c, d):
     GPIO.output(A, a)

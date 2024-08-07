@@ -1,3 +1,4 @@
+from posixpath import curdir
 import interactions
 from interactions import (slash_command, SlashContext, listen, slash_option, OptionType,
                           StringSelectMenu, component_callback, ComponentContext, Embed, File,
@@ -10,6 +11,8 @@ from config.config import Config
 from utils.getWlanLevel import get_signal_level
 from time import sleep
 import os
+
+from rotateMotor import LEFT_TURN, RIGHT_TURN, setup_like_fc_i_have_holidays
 
 from scripts.imageManagement.manageImageStorage import manageImageStorage, sortImages, list_files
 
@@ -25,6 +28,7 @@ terminal_channel_id = configData.get_value("discord", "terminalChannelId")
 watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
 status_channel, terminal_channel, watcher_channel, destination_channel = None, None, None, "ss"
 bot = None
+current_rotation = 0
 # sleep(60)
 sleep(1)
 if useDiscordBot:
@@ -90,6 +94,34 @@ async def usage(ctx: SlashContext) -> None:
 
     await ctx.channel.send(embed=embed, components=refresh_button)
     await ctx.send("Setuped usage!", ephemeral=True)
+
+@slash_command(name="cameracontroll", description="Sets up the camera controll.")
+async def cameracontroll(ctx: SlashContext) -> None:
+    left_turn_button = Button(
+        style=ButtonStyle.PRIMARY,
+        label="Left",
+        custom_id="left_turn_button"
+    )
+
+    right_turn_button = Button(
+        style=ButtonStyle.PRIMARY,
+        label="Right",
+        custom_id="right_turn_button"
+    )
+
+    embed = Embed(title="Camera Controll", color=0x7289DA)
+    embed.add_field(
+        name="Left Turn Button",
+        value="Click the button to turn the camera 10 degrees to the left."
+    )
+    embed.add_field(
+        name="Right Turn Button",
+        value="Click the button to turn the camera 10 degrees to the right."
+    )
+
+    await ctx.channel.send(embed=embed, components=[left_turn_button, right_turn_button])
+
+    await ctx.send("Setuped camera controll!", ephemeral=True)
 
 @slash_command(name="settings", description="Manage the Settings")
 async def settings(ctx: SlashContext):
@@ -211,11 +243,35 @@ async def refresh_image(ctx):
         if isinstance(ctx, ComponentContext):
             return await ctx.send(f"An unexpected error occured. Try again.", ephemeral=True)
 
+max_rotation = 90
+min_rotation = -90
+def at_max_rotation() -> bool:
+    if current_rotation >= max_rotation or current_rotation <= min_rotation:
+        return True
+    return False
 
 @component_callback("refresh_button")
 async def refresh_button(ctx: ComponentContext):
     await ctx.defer(ephemeral=True)
     await refresh_image(ctx)
+
+@component_callback("left_turn_button")
+async def left_turn_button(ctx: ComponentContext):
+    await ctx.defer(ephemeral=True)
+    if not at_max_rotation():
+        LEFT_TURN(10)
+        await refresh_image(ctx)
+    else:
+        await ctx.send("Can't turn left. The camera is already at the leftmost position.", ephemeral=True)
+
+@component_callback("right_turn_button")
+async def right_turn_button(ctx: ComponentContext):
+    await ctx.defer(ephemeral=True)
+    if not at_max_rotation():
+        RIGHT_TURN(10)
+        await refresh_image(ctx)
+    else:
+        await ctx.send("Can't turn right. The camera is already at the rightmost position.", ephemeral=True)
 
 
 def start_bot(bot, restart_time=5):
