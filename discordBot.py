@@ -29,6 +29,7 @@ watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
 status_channel, terminal_channel, watcher_channel, destination_channel = None, None, None, "ss"
 bot = None
 current_rotation = 0
+setup_like_fc_i_have_holidays()
 # sleep(60)
 sleep(1)
 if useDiscordBot:
