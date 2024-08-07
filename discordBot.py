@@ -261,6 +261,7 @@ async def left_turn_button(ctx: ComponentContext):
     await ctx.defer(ephemeral=True)
     if not at_max_rotation():
         LEFT_TURN(10)
+        current_rotation -= 10
         await refresh_image(ctx)
     else:
         await ctx.send("Can't turn left. The camera is already at the leftmost position.", ephemeral=True)
@@ -270,6 +271,7 @@ async def right_turn_button(ctx: ComponentContext):
     await ctx.defer(ephemeral=True)
     if not at_max_rotation():
         RIGHT_TURN(10)
+        current_rotation += 10
         await refresh_image(ctx)
     else:
         await ctx.send("Can't turn right. The camera is already at the rightmost position.", ephemeral=True)
