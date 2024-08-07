@@ -29,6 +29,7 @@ watcher_channel_id = int(configData.get_value("discord", "watcherChannelId"))
 status_channel, terminal_channel, watcher_channel, destination_channel = None, None, None, "ss"
 bot = None
 current_rotation = 0
+
 setup_like_fc_i_have_holidays()
 # sleep(60)
 sleep(1)
@@ -258,6 +259,7 @@ async def refresh_button(ctx: ComponentContext):
 
 @component_callback("left_turn_button")
 async def left_turn_button(ctx: ComponentContext):
+    global current_rotation
     await ctx.defer(ephemeral=True)
     if not at_max_rotation():
         LEFT_TURN(10)
@@ -268,6 +270,8 @@ async def left_turn_button(ctx: ComponentContext):
 
 @component_callback("right_turn_button")
 async def right_turn_button(ctx: ComponentContext):
+    global current_rotation
+
     await ctx.defer(ephemeral=True)
     if not at_max_rotation():
         RIGHT_TURN(10)
