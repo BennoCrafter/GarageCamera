@@ -32,12 +32,17 @@ $python_version server.py &
 $PID2=$!
 
 echo "Starting Auto restart!"
-$python_version scripts/auto_restart.py
+$python_version scripts/auto_restart.py &
 $PID3=$!
 
 echo "Starting Auto change detector!"
-$python_version changeDetector/changeDetector.py
-$PID3=$!
+$python_version changeDetector/changeDetector.py &
+$PID4=$!
+
+echo "Starting on startup script"
+$python_version on_startup.py $
+$PID5 = $!
+
 
 file_path="assets/ascii_name.txt"
 
